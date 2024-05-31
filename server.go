@@ -11,8 +11,11 @@ import (
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
+	// CheckOrigin: func(r *http.Request) bool {
+	// 	return r.Header.Get("Origin") == "chrome-extension://cbcbkhdmedgianpaifchdaddpnmgnknn"
+	// },
 	CheckOrigin: func(r *http.Request) bool {
-		return r.Header.Get("Origin") == "chrome-extension://cbcbkhdmedgianpaifchdaddpnmgnknn"
+		return true
 	},
 }
 
@@ -65,10 +68,13 @@ func WsHandler(m *Manager, ctx *gin.Context) {
 		return
 	}
 
-	client := &Client{username:"", manager: m, conn: conn, send: make(chan []byte)}
+	username := ctx.Request.URL.Query().Get("username")
+
+	client := &Client{username:username, manager: m, conn: conn, send: make(chan []byte)}
 	client.manager.register <- client
 
-	fmt.Println("Client connected: ", conn.RemoteAddr(), "Username: ", client.username)
+	// fmt.Println("Client connected: ", conn.RemoteAddr(), "Username: ", client.username)
+	fmt.Println(client.username, " joined the room.")
 	
 	go client.Read()
 	go client.Write()
