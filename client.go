@@ -11,3 +11,5 @@ type Client struct {
 	send chan []byte
 }
 
+func (c *Client) Read(){}
+func (c *Client) Write(){}

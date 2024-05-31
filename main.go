@@ -17,7 +17,8 @@ func rootHandler(ctx *gin.Context) {
 func main() {
 	flag.Parse()
 
-	go NewManager().Run()
+	manager := NewManager()
+	go manager.Run()
 
 	gin.SetMode(gin.ReleaseMode)
 
@@ -28,7 +29,9 @@ func main() {
 
 
 	router.GET("/", rootHandler)
-	router.GET("/ws", WsHandler)
+	router.GET("/ws", func(ctx *gin.Context) {
+		WsHandler(manager, ctx)
+	})
 
 	fmt.Println("Starting server on", *addr)
 	log.Fatal(router.Run(*addr))

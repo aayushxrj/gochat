@@ -33,27 +33,54 @@ func NewManager() *Manager {
 	}
 }
 
-func (s *Manager) Run() {
+func (m *Manager) Run() {
 	fmt.Println("Manager is running successfully...")
+	for{
+		select{
+		case client := <-m.register:
+			m.clients[client] = true
+		case client := <-m.unregister:
+			_, ok := m.clients[client]
+			if ok{
+				delete(m.clients, client)
+				close(client.send)
+			}
+		case message := <-m.broadcast:
+			for client := range m.clients{
+				select{
+				case client.send <- message:
+				default:
+					close(client.send)
+					delete(m.clients, client)
+				}
+			}
+		}
+	}
 }
 
-func WsHandler(ctx *gin.Context) {
+func WsHandler(m *Manager, ctx *gin.Context) {
 	conn, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	defer conn.Close()
 
-	fmt.Println("Client connected: ", conn.RemoteAddr())
+	client := &Client{username:"aayush", manager: m, conn: conn, send: make(chan []byte)}
+	client.manager.register <- client
 
-	for {
-		_, _, err := conn.ReadMessage()
-		if err != nil {
-			fmt.Println("Client disconnected: ", conn.RemoteAddr())
-			break
-		}
+	go client.Read()
+	go client.Write()
 
-		conn.WriteMessage(websocket.TextMessage, []byte("Hello, client!"))
-	}
+	// defer conn.Close()
+	// fmt.Println("Client connected: ", conn.RemoteAddr())
+
+	// for {
+	// 	_, _, err := conn.ReadMessage()
+	// 	if err != nil {
+	// 		fmt.Println("Client disconnected: ", conn.RemoteAddr())
+	// 		break
+	// 	}
+
+	// 	conn.WriteMessage(websocket.TextMessage, []byte("Hello, client!"))
+	// }
 }
