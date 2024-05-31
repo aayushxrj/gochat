@@ -65,9 +65,11 @@ func WsHandler(m *Manager, ctx *gin.Context) {
 		return
 	}
 
-	client := &Client{username:"aayush", manager: m, conn: conn, send: make(chan []byte)}
+	client := &Client{username:"", manager: m, conn: conn, send: make(chan []byte)}
 	client.manager.register <- client
 
+	fmt.Println("Client connected: ", conn.RemoteAddr(), "Username: ", client.username)
+	
 	go client.Read()
 	go client.Write()
 
