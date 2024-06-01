@@ -1,12 +1,10 @@
 import React from 'react';  
 
-function Chat() {
+function Chat({ username }) {
     return (
-        <>
         <div className="card">
-            <h1>Chat</h1>
+            <h1>Connected as {username}</h1>
         </div>
-        </>
     )
 }
 

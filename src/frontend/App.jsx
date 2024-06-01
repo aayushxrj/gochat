@@ -6,13 +6,16 @@ import './App.css'
 function App() {
   const [isJoined, setIsJoined] = useState(false);
 
+  const [username, setUsername] = useState("");
+
   const handleJoin = (username) => {
     setIsJoined(true);
+    setUsername(username);
   }
 
   return (
     <>
-      {isJoined ? <Chat /> : <Connect onJoin={handleJoin} />}
+      {isJoined ? <Chat username={username}/> : <Connect onJoin={handleJoin} />}
     </>
   )
 }
