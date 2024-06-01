@@ -5,6 +5,7 @@ import Message from './message.jsx';
 function Chat({ username }) {
     const [messages, setMessages] = useState([]);
     const socketRef = useRef(null);
+    const [userColors] = useState(() => new Map());
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8080/ws?username=" + encodeURIComponent(username));
@@ -68,9 +69,15 @@ function Chat({ username }) {
             <h4>Disconnected</h4>}  */}
 
             <div className="messages">
-                {messages.map((messageInfo, index) => (
-                    <Message key={index} messageInfo={messageInfo} />
-                ))}
+            {messages.map((messageInfo, index) => {
+                // If this user doesn't have a color yet, generate one
+                if (!userColors.has(messageInfo.username)) {
+                    userColors.set(messageInfo.username, '#' + Math.floor(Math.random()*16777215).toString(16));
+                }
+
+                // Pass the color to the Message component
+                return <Message key={index} messageInfo={messageInfo} color={userColors.get(messageInfo.username)} />;
+            })}
             </div>
             
             <Input onSubmit={handleMessageSubmit} />

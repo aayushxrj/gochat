@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Message({ messageInfo }) {
+function Message({ messageInfo, color }) {
     const { username, text } = messageInfo;
 
     return (
         <div className="message">
-            <strong>{username}</strong>
+            <strong style={{ color }}>{username}</strong>
             <p>
                 {text}
             </p>

@@ -41,10 +41,14 @@ input[type="text"]#username:focus {
 
 .inputDiv {
     display: flex;
-    align-items: center;
     gap: 10px;
-    position: absolute;
+    position: absolute;                     /*   to edit */
     bottom: 0px;
+    margin-bottom: 10px;
+    left: 1vw; /* Add this line */
+    right: 1vw; /* Add this line */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 input[type="text"]#inputMessage{
@@ -63,22 +67,14 @@ input[type="text"]#inputMessage:focus {
 }
 
 .chat-card {
-    padding: 2em;
+    position: relative;
+    padding: 2em ;
     background-color: #2e2e2e; 
     border-radius: 8px;
     min-height: 75vh;
-    min-width: 30vw;
+    min-width: 400px;
 }
 
-/* .message{
-    padding-left: 5px;
-    border-radius: 4px;
-    background-color: #3f604e;
-    color: #f9f9f9;
-    width: 80%;
-    text-align: left;
-    align-self: flex-start;
-} */
 .message {
     padding: 10px;
     border-radius: 4px;
@@ -88,15 +84,19 @@ input[type="text"]#inputMessage:focus {
     text-align: left;
     align-self: flex-start;
     margin-bottom: 10px;
+    width: 70%;
+    word-wrap: break-word;
 }
 
 .message strong {
     display: block;
-    font-size: 0.8em;
+    font-size: 0.7em;
     font-weight: bold;
-    margin-bottom: -8px;
+    margin-bottom: -3px;
 }
 
 .message p {
     margin: 0;
+    font-size: 0.8em;
+    line-height: 1em;
 }
