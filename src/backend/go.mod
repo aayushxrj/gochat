@@ -1,4 +1,4 @@
-module github.com/aayushxrj/gochat
+module github.com/aayushxrj/gochat/backend/src
 
 go 1.22.2
 

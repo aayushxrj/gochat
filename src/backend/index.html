@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Room</title>
+</head>
+<body>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <button onclick="connect()">Connect</button>
+
+    <form id="form">
+        <input id="msg" type="text">
+        <button>Send</button>
+    </form>
+
+    <div id="log"></div>
+
+    <script>
+        var conn;
+        var msg = document.getElementById('msg');
+        var log = document.getElementById('log');
+        var form = document.getElementById('form');
+
+        function appendLog(item) {
+            log.appendChild(item);
+        }
+
+        form.onsubmit = function () {
+            if (!conn) {
+                return false;
+            }
+            if (!msg.value) {
+                return false;
+            }
+            conn.send(msg.value);
+            msg.value = '';
+            return false;
+        }
+
+        function connect() {
+            var username = document.getElementById('username').value;
+            conn = new WebSocket("ws://localhost:8080/ws?username=" + encodeURIComponent(username));
+
+            conn.onopen = function(e) {
+                var item = document.createElement('div');
+                item.innerHTML = "<b>Connection established.</b>";
+                appendLog(item);
+            };
+
+                var item = document.createElement('div');
+                item.innerHTML = username + " joined the room.";
+                appendLog(item);
+
+            conn.onclose = function(e) {
+                var item = document.createElement('div');
+                item.innerHTML = "<b>Connection closed.</b>";
+                appendLog(item);
+            };
+
+            conn.onmessage = function(e) {
+                var item = document.createElement('div');
+                item.innerHTML = username+ "->" +e.data;
+                appendLog(item);
+            };
+        }
+    </script>
+</body>
+</html>
