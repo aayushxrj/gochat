@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Message({ messageInfo }) {
+    const { username, text } = messageInfo;
+
     return (
         <div className="message">
-        <p>{messageInfo.username} - {messageInfo.text}</p>
+            <strong>{username}</strong>
+            <p>
+                {text}
+            </p>
         </div>
     );
 }
