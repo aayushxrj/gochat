@@ -15,13 +15,32 @@ function Chat({ username }) {
             socketRef.current = socket;
         };
 
+        // TO AVOID DUPLICATE RECEIVING MESSAGE ISSUE
+
+        // check if the message is already in the messages array
+        // socket.onmessage = (event) => {
+        //     const incomingMessage = JSON.parse(event.data);
+        //     console.log('Received message:', incomingMessage);
+        //     setMessages((prevMessages) => {
+        //         const isMessageExist = prevMessages.some((message) => message.text === incomingMessage.text);
+        
+        //         if (!isMessageExist) {
+        //             return [...prevMessages, incomingMessage];
+        //         }
+        
+        //         return prevMessages;
+        //     });
+        // };
+
+        // checks if last message is not the same as the incoming message
         socket.onmessage = (event) => {
             const incomingMessage = JSON.parse(event.data);
             console.log('Received message:', incomingMessage);
             setMessages((prevMessages) => {
-                const isMessageExist = prevMessages.some((message) => message.text === incomingMessage.text);
+                const lastMessage = prevMessages[prevMessages.length - 1];
+                const isMessageSameAsLast = lastMessage && lastMessage.text === incomingMessage.text;
         
-                if (!isMessageExist) {
+                if (!isMessageSameAsLast) {
                     return [...prevMessages, incomingMessage];
                 }
         
@@ -62,12 +81,6 @@ function Chat({ username }) {
                 <span style={{ display: 'inline-block', marginLeft: '10px', height: '10px', width: '10px', backgroundColor: 'green', borderRadius: '50%' }}></span>
             </h4>
 
-
-
-            {/* {socketRef.current && socketRef.current.readyState === WebSocket.OPEN ? 
-            <h4>Connected as {username}</h4> : 
-            <h4>Disconnected</h4>}  */}
-
             <div className="messages">
             {messages.map((messageInfo, index) => {
                 // If this user doesn't have a color yet, generate one
@@ -75,8 +88,10 @@ function Chat({ username }) {
                     userColors.set(messageInfo.username, '#' + Math.floor(Math.random()*16777215).toString(16));
                 }
 
+                const isCurrentUser = messageInfo.username === username;
+
                 // Pass the color to the Message component
-                return <Message key={index} messageInfo={messageInfo} color={userColors.get(messageInfo.username)} />;
+                return <Message key={index} messageInfo={messageInfo} color={userColors.get(messageInfo.username)} isCurrentUser={isCurrentUser} />;
             })}
             </div>
             
