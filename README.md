@@ -28,8 +28,8 @@ To get started with GoChat, you need to have Go and Node.js installed on your ma
 
 1. Install Prerequisites
 
-- Go (1.22.2 or later)
-- Node.js (19.8.1 or later)
+- [Go](https://go.dev/) (1.22.2 or later)
+- [Node.js](https://nodejs.org/en) (19.8.1 or later)
 
 2. Start the backend server
 
@@ -53,26 +53,25 @@ npm run dev
 
 You can access the app at `http://localhost:5173/`
 
-### Docker Usage (coming soon)
+### Docker Usage
 
 If you have Docker installed and running, you can also run the application using Docker. Follow these steps:
 
-1. Build the Docker image locally:
+#### Using Docker Compose
+
+Directly pull and run from Docker Hub (recommended):
 
 ```
-
-```
-or directly pull from Docker Hub (recommended):
-
+docker-compose up
 ```
 
-```
-
-2. Run the Docker container:
+or Build and run the Docker image locally:
 
 ```
-
+docker-compose up --build
 ```
+
+You can access the app at `http://localhost:5173/`
 
 ## Using the Application
 
