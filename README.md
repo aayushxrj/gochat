@@ -28,9 +28,8 @@ To get started with GoChat, you need to have Go and Node.js installed on your ma
 
 1. Install Prerequisites
 
-- Go (1.22.3 or later)
+- Go (1.22.2 or later)
 - Node.js (19.8.1 or later)
-- npm (9.8.0 or later)
 
 2. Start the backend server
 

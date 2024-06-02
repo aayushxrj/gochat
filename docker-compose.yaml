@@ -1,0 +1,14 @@
+services:
+  backend:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    image: aayushxrj/gochat-backend:latest
+  frontend:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    image: aayushxrj/gochat-frontend:latest
