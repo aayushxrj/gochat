@@ -8,10 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var addr = flag.String("addr", "localhost:8080", "http service address")
+var addr = flag.String("addr", ":8080", "http service address")
 
+// for checking if the websocket server is working
 func rootHandler(ctx *gin.Context) {
-	ctx.File("./index.html")
+	ctx.File("./tests/index.html")
 }
 
 func main() {
