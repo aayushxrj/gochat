@@ -20,7 +20,7 @@ git clone https://github.com/aayushxrj/gochat
 cd ./gochat/
 ```
 
-Now you can get the app up and running using either [Docker](https://www.docker.com/) or by running it locally.
+Now you can get the app up and running. You can do this either by running it locally on your machine or via [Docker](https://www.docker.com/) or within a [GitHub Codespace](https://github.com/features/codespaces).
 
 ### Local Usage
 
@@ -72,6 +72,30 @@ docker-compose up --build
 ```
 
 You can access the app at `http://localhost:5173/`
+
+### GitHub Codespaces Usage
+
+If you're running this inside a GitHub Codespace, follow these steps to get the app up and running:
+
+1. Execute the following command in the terminal to get the Codespace name:
+
+```
+export $CODESPACE_NAME
+```
+
+2. Copy the output and add it to the .env file in the root directory of the project. Your dotenv file should look like this:
+
+```
+VITE_CODESPACE_NAME=your_codespace_name
+```
+
+3. Build and run the Docker image:
+
+```
+docker-compose up --build
+```
+
+You can then access the app at `https://your_codespace_name-5173.app.github.dev/`
 
 ## Using the Application
 

@@ -7,8 +7,20 @@ function Chat({ username }) {
     const socketRef = useRef(null);
     const [userColors] = useState(() => new Map());
 
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+
     useEffect(() => {
-        const socket = new WebSocket("ws://localhost:8080/ws?username=" + encodeURIComponent(username));
+        
+        // const socket = new WebSocket("ws://localhost:8080/ws?username=" + encodeURIComponent(username));
+        // const socket = new WebSocket("wss://verbose-space-spoon-jj5w6g99qgwf5vgv-8080.app.github.dev/ws?username=" + encodeURIComponent(username));
+
+        let websocketUrl;
+        if (!codespaceName) {
+            websocketUrl = "ws://localhost:8080/ws?username=" + encodeURIComponent(username);
+        } else {
+            websocketUrl = "wss://" + codespaceName + "-8080.app.github.dev/ws?username=" + encodeURIComponent(username);
+        }
+        const socket = new WebSocket(websocketUrl);
 
         socket.onopen = () => {
             console.log('WebSocket connection opened');

@@ -39,7 +39,10 @@
 
         function connect() {
             var username = document.getElementById('username').value;
-            conn = new WebSocket("ws://localhost:8080/ws?username=" + encodeURIComponent(username));
+
+            // for checking if the websocket server is working
+            // conn = new WebSocket("ws://localhost:8080/ws?username=" + encodeURIComponent(username));
+            // conn = new WebSocket("wss://verbose-space-spoon-jj5w6g99qgwf5vgv-8080.app.github.dev/ws?username=" + encodeURIComponent(username));
 
             conn.onopen = function(e) {
                 var item = document.createElement('div');
