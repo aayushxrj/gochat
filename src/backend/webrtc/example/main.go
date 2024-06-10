@@ -24,7 +24,7 @@ import (
 
 // nolint
 var (
-	addr     = flag.String("addr", ":9000", "http service address")
+	addr     = flag.String("addr", ":8082", "http service address")
 	upgrader = websocket.Upgrader{
 		CheckOrigin: func(r *http.Request) bool { return true },
 	}
