@@ -119,3 +119,26 @@ input[type="text"]#inputMessage:focus {
     font-size: 0.8em;
     line-height: 1em;
 }
+
+/* CSS for the buttons in App.jsx */
+.button-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .button-row button {
+    flex: 1; /* Each button takes equal space */
+  }
+  .button-row button:first-child {
+    margin-right: 20px; /* Adds space to the right of the first button only */
+  }
+  
+  /* Style for the Global Chat button to take full width */
+  .global-chat-button {
+    width: 100%;
+  }
