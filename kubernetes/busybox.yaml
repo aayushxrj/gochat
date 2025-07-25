@@ -1,0 +1,18 @@
+# save this as busybox.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-test
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command: ["sleep", "3600"]
+    resources:
+      requests:
+        memory: "200Mi"
+        cpu: "250m"
+
+# kubectl apply -f kubernetes/
+# kubectl get pod busybox-test -o wide
+# kubectl get pods -A
